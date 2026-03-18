@@ -4,7 +4,6 @@ interface Props {
 }
 
 const { lang = "es" } = Astro.props;
-
 const isEN = lang === "en";
 
 const nav = {
@@ -23,11 +22,11 @@ const nav = {
     id="navbar"
     class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
 >
-    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
         <!-- Logo -->
         <a
             href={lang === "en" ? "/en" : "/"}
-            class="font-display font-800 text-lg tracking-tight flex items-center gap-2"
+            class="font-display font-extrabold text-lg tracking-tight flex items-center gap-2 z-50 relative"
         >
             <span
                 class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-sm font-bold"
@@ -49,9 +48,8 @@ const nav = {
             <a href="#install" class="nav-link">{nav.install}</a>
         </nav>
 
-        <!-- Right side -->
-        <div class="flex items-center gap-3">
-            <!-- Lang switcher -->
+        <!-- Right side desktop -->
+        <div class="hidden md:flex items-center gap-3">
             <a
                 href={nav.otherHref}
                 class="text-xs font-mono px-2 py-1 rounded-md transition-colors"
@@ -59,8 +57,6 @@ const nav = {
             >
                 {nav.otherLang}
             </a>
-
-            <!-- Theme toggle -->
             <button
                 id="theme-toggle"
                 aria-label="Toggle theme"
@@ -114,18 +110,14 @@ const nav = {
                     ></path>
                 </svg>
             </button>
-
-            <!-- GitHub -->
             <a
                 href="https://github.com/devureca/qollqastore"
                 target="_blank"
                 rel="noopener"
-                class="hidden md:flex btn-ghost py-1.5 px-4 text-sm"
+                class="btn-ghost py-1.5 px-4 text-sm"
             >
                 GitHub ↗
             </a>
-
-            <!-- Demo CTA -->
             <a
                 href="https://qollqastore.vercel.app"
                 target="_blank"
@@ -135,8 +127,141 @@ const nav = {
                 {nav.demo}
             </a>
         </div>
+
+        <!-- Mobile right side -->
+        <div class="flex md:hidden items-center gap-3 z-50 relative pr-6">
+            <a
+                href={nav.otherHref}
+                class="text-xs font-mono px-2 py-1 rounded-md"
+                style="color: var(--text-muted); border: 1px solid var(--border);"
+            >
+                {nav.otherLang}
+            </a>
+            <button
+                id="theme-toggle-mobile"
+                aria-label="Toggle theme"
+                class="w-8 h-8 rounded-full flex items-center justify-center"
+                style="border: 1px solid var(--border); color: var(--text-muted);"
+            >
+                <svg
+                    id="icon-sun-mobile"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="hidden"
+                >
+                    <circle cx="12" cy="12" r="5"></circle><line
+                        x1="12"
+                        y1="1"
+                        x2="12"
+                        y2="3"></line><line x1="12" y1="21" x2="12" y2="23"
+                    ></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line
+                        x1="18.36"
+                        y1="18.36"
+                        x2="19.78"
+                        y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line><line
+                        x1="21"
+                        y1="12"
+                        x2="23"
+                        y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line
+                        x1="18.36"
+                        y1="5.64"
+                        x2="19.78"
+                        y2="4.22"></line>
+                </svg>
+                <svg
+                    id="icon-moon-mobile"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                    ></path>
+                </svg>
+            </button>
+            <!-- Hamburger -->
+            <button
+                id="menu-toggle"
+                aria-label="Toggle menu"
+                class="w-8 h-8 flex flex-col items-center justify-center gap-1.5"
+            >
+                <span
+                    class="hamburger-line w-5 h-0.5 transition-all duration-300"
+                    style="background-color: var(--text);"></span>
+                <span
+                    class="hamburger-line w-5 h-0.5 transition-all duration-300"
+                    style="background-color: var(--text);"></span>
+                <span
+                    class="hamburger-line w-5 h-0.5 transition-all duration-300"
+                    style="background-color: var(--text);"></span>
+            </button>
+        </div>
     </div>
 </header>
+
+<!-- Mobile menu -->
+<div
+    id="mobile-menu"
+    class="fixed inset-0 z-40 flex flex-col px-6 pt-24 pb-10 gap-6 pointer-events-none opacity-0 transition-opacity duration-300"
+    style="background-color: var(--bg);"
+>
+    <nav class="flex flex-col gap-2">
+        <a
+            href="#how-it-works"
+            class="mobile-nav-link py-3 text-2xl font-display font-bold border-b"
+            style="color: var(--text); border-color: var(--border);"
+            >{nav.howItWorks}</a
+        >
+        <a
+            href="#features"
+            class="mobile-nav-link py-3 text-2xl font-display font-bold border-b"
+            style="color: var(--text); border-color: var(--border);"
+            >{nav.features}</a
+        >
+        <a
+            href="#stack"
+            class="mobile-nav-link py-3 text-2xl font-display font-bold border-b"
+            style="color: var(--text); border-color: var(--border);"
+            >{nav.stack}</a
+        >
+        <a
+            href="#install"
+            class="mobile-nav-link py-3 text-2xl font-display font-bold border-b"
+            style="color: var(--text); border-color: var(--border);"
+            >{nav.install}</a
+        >
+        <a
+            href="#faq"
+            class="mobile-nav-link py-3 text-2xl font-display font-bold border-b"
+            style="color: var(--text); border-color: var(--border);">FAQ</a
+        >
+    </nav>
+    <!-- <div class="flex flex-col gap-3 mt-4">
+        <a
+            href="https://github.com/devureca/qollqastore"
+            target="_blank"
+            rel="noopener"
+            class="btn-ghost text-center">GitHub ↗</a
+        >
+        <a
+            href="https://qollqastore.vercel.app"
+            target="_blank"
+            rel="noopener"
+            class="btn-primary text-center">{nav.demo}</a
+        >
+    </div> -->
+</div>
 
 <!-- Spacer -->
 <div class="h-16"></div>
@@ -157,35 +282,80 @@ const nav = {
     .nav-link:hover {
         color: var(--accent);
     }
+    #mobile-menu.open {
+        opacity: 1;
+        pointer-events: all;
+    }
+    .menu-open .hamburger-line:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-open .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-open .hamburger-line:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
 </style>
 
 <script>
     // Scroll effect
     const navbar = document.getElementById("navbar");
     window.addEventListener("scroll", () => {
-        if (window.scrollY > 20) {
-            navbar?.classList.add("scrolled");
-        } else {
-            navbar?.classList.remove("scrolled");
-        }
+        navbar?.classList.toggle("scrolled", window.scrollY > 20);
     });
 
-    // Theme toggle
-    const btn = document.getElementById("theme-toggle");
-    const iconSun = document.getElementById("icon-sun");
-    const iconMoon = document.getElementById("icon-moon");
+    // Theme toggle (desktop)
+    function setupThemeToggle(btnId: string, sunId: string, moonId: string) {
+        const btn = document.getElementById(btnId);
+        const sun = document.getElementById(sunId);
+        const moon = document.getElementById(moonId);
 
-    function updateIcons() {
-        const isDark = document.documentElement.classList.contains("dark");
-        iconSun?.classList.toggle("hidden", !isDark);
-        iconMoon?.classList.toggle("hidden", isDark);
+        function updateIcons() {
+            const isDark = document.documentElement.classList.contains("dark");
+            sun?.classList.toggle("hidden", !isDark);
+            moon?.classList.toggle("hidden", isDark);
+        }
+
+        updateIcons();
+        btn?.addEventListener("click", () => {
+            const isDark = document.documentElement.classList.toggle("dark");
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+            updateIcons();
+            // sync both toggles
+            const otherSun = document.getElementById(
+                sunId === "icon-sun" ? "icon-sun-mobile" : "icon-sun",
+            );
+            const otherMoon = document.getElementById(
+                moonId === "icon-moon" ? "icon-moon-mobile" : "icon-moon",
+            );
+            otherSun?.classList.toggle("hidden", !isDark);
+            otherMoon?.classList.toggle("hidden", isDark);
+        });
     }
 
-    updateIcons();
+    setupThemeToggle("theme-toggle", "icon-sun", "icon-moon");
+    setupThemeToggle(
+        "theme-toggle-mobile",
+        "icon-sun-mobile",
+        "icon-moon-mobile",
+    );
 
-    btn?.addEventListener("click", () => {
-        const isDark = document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-        updateIcons();
+    // Hamburger menu
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuToggle?.addEventListener("click", () => {
+        menuToggle.classList.toggle("menu-open");
+        mobileMenu?.classList.toggle("open");
+        document.body.classList.toggle("overflow-hidden");
+    });
+
+    // Close menu on link click
+    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+        link.addEventListener("click", () => {
+            menuToggle?.classList.remove("menu-open");
+            mobileMenu?.classList.remove("open");
+            document.body.classList.remove("overflow-hidden");
+        });
     });
 </script>
