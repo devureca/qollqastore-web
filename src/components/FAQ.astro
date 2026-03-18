@@ -1,0 +1,153 @@
+---
+interface Props {
+    lang?: string;
+}
+
+const { lang = "es" } = Astro.props;
+const isEN = lang === "en";
+
+const t = {
+    badge: isEN ? "✦ FAQ" : "✦ Preguntas frecuentes",
+    title: isEN
+        ? "Got questions?\nWe got answers."
+        : "¿Tienes dudas?\nLas respondemos.",
+    faqs: [
+        {
+            q: isEN ? "Is it really free?" : "¿Es realmente gratis?",
+            a: isEN
+                ? "Yes, 100%. Vercel and Google Sheets are free. QollqaStore is open source. No hidden costs, no subscriptions, no credit card required."
+                : "Sí, 100%. Vercel y Google Sheets son gratuitos. QollqaStore es open source. Sin costos ocultos, sin suscripciones, sin tarjeta de crédito.",
+        },
+        {
+            q: isEN
+                ? "Do I need to know how to code?"
+                : "¿Necesito saber programar?",
+            a: isEN
+                ? "Not at all. Everything is configured from the Google Sheet. If you can edit a spreadsheet, you can manage your store."
+                : "Para nada. Todo se configura desde el Google Sheet. Si puedes editar una hoja de cálculo, puedes manejar tu tienda.",
+        },
+        {
+            q: isEN
+                ? "How fast does the store update when I edit the Sheet?"
+                : "¿Qué tan rápido se actualiza la tienda al editar el Sheet?",
+            a: isEN
+                ? "Changes reflect in seconds. QollqaStore reads your Sheet data directly on each visit, so there's no manual sync needed."
+                : "Los cambios se reflejan en segundos. QollqaStore lee los datos del Sheet directamente en cada visita, sin sincronización manual.",
+        },
+        {
+            q: isEN
+                ? "Can I use my own domain?"
+                : "¿Puedo usar mi propio dominio?",
+            a: isEN
+                ? "Yes. Vercel lets you connect a custom domain for free. You can have yourstore.com instead of yourstore.vercel.app."
+                : "Sí. Vercel permite conectar un dominio personalizado gratis. Puedes tener tutienda.com en lugar de tutienda.vercel.app.",
+        },
+        {
+            q: isEN
+                ? "What happens if I modify the source code?"
+                : "¿Qué pasa si modifico el código fuente?",
+            a: isEN
+                ? "The license allows personal and commercial use but not modifying or redistributing the code. All customization is done from the Sheet."
+                : "La licencia permite uso personal y comercial pero no modificar ni redistribuir el código. Toda la personalización se hace desde el Sheet.",
+        },
+        {
+            q: isEN
+                ? "What are the auto-updates?"
+                : "¿Qué son las actualizaciones automáticas?",
+            a: isEN
+                ? "Every Monday at midnight your store checks for improvements in the repo and applies them automatically. You don't need to do anything."
+                : "Cada lunes a medianoche tu tienda revisa si hay mejoras en el repo y las aplica sola. No tienes que hacer nada.",
+        },
+    ],
+};
+---
+
+<section id="faq" class="py-24 px-6" style="background-color: var(--bg-2);">
+    <div class="max-w-3xl mx-auto">
+        <!-- Header -->
+        <div class="reveal text-center mb-16">
+            <span class="badge mb-4 inline-block">{t.badge}</span>
+            <h2
+                class="font-display font-extrabold whitespace-pre-line"
+                style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text);"
+            >
+                {t.title}
+            </h2>
+        </div>
+
+        <!-- Accordion -->
+        <div class="flex flex-col gap-3">
+            {
+                t.faqs.map((faq, i) => (
+                    <div
+                        class="reveal faq-item rounded-2xl overflow-hidden"
+                        style={`border: 1px solid var(--border); animation-delay: ${i * 0.08}s`}
+                    >
+                        <button
+                            class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                            style="background-color: var(--card-bg);"
+                        >
+                            <span
+                                class="font-display font-semibold text-base"
+                                style="color: var(--text);"
+                            >
+                                {faq.q}
+                            </span>
+                            <span
+                                class="faq-icon shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-transform duration-300"
+                                style="border: 1px solid var(--border); color: var(--text-muted);"
+                            >
+                                +
+                            </span>
+                        </button>
+
+                        <div
+                            class="faq-answer overflow-hidden"
+                            style="max-height: 0; transition: max-height 0.3s ease;"
+                        >
+                            <p
+                                class="px-6 pb-5 text-sm leading-relaxed"
+                                style="color: var(--text-muted);"
+                            >
+                                {faq.a}
+                            </p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll(".faq-trigger").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+            const item = trigger.closest(".faq-item");
+            const answer = item?.querySelector(".faq-answer") as HTMLElement;
+            const icon = trigger.querySelector(".faq-icon");
+            const isOpen =
+                answer?.style.maxHeight !== "0px" &&
+                answer?.style.maxHeight !== "";
+
+            // Close all
+            document.querySelectorAll(".faq-answer").forEach((el) => {
+                (el as HTMLElement).style.maxHeight = "0px";
+            });
+            document.querySelectorAll(".faq-icon").forEach((el) => {
+                el.textContent = "+";
+                (el as HTMLElement).style.transform = "rotate(0deg)";
+                (el as HTMLElement).style.color = "var(--text-muted)";
+            });
+
+            // Open clicked if it was closed
+            if (!isOpen && answer) {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+                if (icon) {
+                    icon.textContent = "+";
+                    (icon as HTMLElement).style.transform = "rotate(45deg)";
+                    (icon as HTMLElement).style.color = "var(--accent)";
+                }
+            }
+        });
+    });
+</script>
