@@ -1,0 +1,94 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+const isEN = lang === 'en';
+
+const t = {
+  badge: isEN ? '✦ Tech stack' : '✦ Stack tecnológico',
+  title: isEN ? 'Built with the\nbest free tools.' : 'Construido con las\nmejores herramientas gratuitas.',
+  sub:   isEN ? 'No paid services. No hidden costs. Everything runs on tools you already know.'
+              : 'Sin servicios de pago. Sin costos ocultos. Todo corre sobre herramientas que ya conoces.',
+  tools: [
+    {
+      name: 'Astro',
+      role: isEN ? 'Web framework' : 'Framework web',
+      desc: isEN ? 'Ultra-fast static site generation. Zero JS by default.'
+                 : 'Generación estática ultra rápida. Cero JS por defecto.',
+      href: 'https://astro.build',
+      color: '#FF5D01',
+    },
+    {
+      name: 'Tailwind CSS',
+      role: isEN ? 'Styles' : 'Estilos',
+      desc: isEN ? 'Utility-first CSS. Fast, consistent and fully customizable.'
+                 : 'CSS utility-first. Rápido, consistente y totalmente personalizable.',
+      href: 'https://tailwindcss.com',
+      color: '#38BDF8',
+    },
+    {
+      name: 'Google Sheets',
+      role: isEN ? 'Database' : 'Base de datos',
+      desc: isEN ? 'Your spreadsheet is your CMS. Edit and your store updates instantly.'
+                 : 'Tu hoja de cálculo es tu CMS. Edita y tu tienda se actualiza al instante.',
+      href: 'https://sheets.google.com',
+      color: '#34A853',
+    },
+    {
+      name: 'Vercel',
+      role: isEN ? 'Hosting' : 'Hosting',
+      desc: isEN ? 'Deploy in one click. Free tier is more than enough for any store.'
+                 : 'Deploy en un clic. El plan gratuito es más que suficiente para cualquier tienda.',
+      href: 'https://vercel.com',
+      color: '#f7f6f3',
+    },
+  ]
+}
+---
+
+<section id="stack" class="py-24 px-6" style="background-color: var(--bg-2);">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="reveal text-center mb-16">
+      <span class="badge mb-4 inline-block">{t.badge}</span>
+      <h2 class="font-display font-extrabold whitespace-pre-line mb-4"
+        style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text);">
+        {t.title}
+      </h2>
+      <p class="max-w-lg mx-auto text-base leading-relaxed" style="color: var(--text-muted);">
+        {t.sub}
+      </p>
+    </div>
+
+    <!-- Tools grid -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+      {t.tools.map((tool, i) => (
+        <a href={tool.href} target="_blank" rel="noopener"
+          class="reveal card flex flex-col gap-4 group no-underline"
+          style={`animation-delay: ${i * 0.1}s`}>
+
+          <!-- Color dot -->
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center"
+            style={`background-color: ${tool.color}22; border: 1px solid ${tool.color}44;`}>
+            <div class="w-3 h-3 rounded-full" style={`background-color: ${tool.color};`}></div>
+          </div>
+
+          <div>
+            <p class="text-xs font-mono mb-1" style="color: var(--text-muted);">{tool.role}</p>
+            <h3 class="font-display font-bold text-xl mb-2" style="color: var(--text);">{tool.name}</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--text-muted);">{tool.desc}</p>
+          </div>
+
+          <span class="text-xs mt-auto" style="color: var(--accent);">
+            {isEN ? 'Visit site' : 'Ver sitio'} →
+          </span>
+
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>
