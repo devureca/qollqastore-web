@@ -1,0 +1,111 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+const isEN = lang === 'en';
+
+const t = {
+  badge: isEN ? '✦ Installation' : '✦ Instalación',
+  title: isEN ? 'Live in\n5 minutes.' : 'En línea en\n5 minutos.',
+  sub:   isEN ? 'Follow these steps and your store will be published before you finish your coffee.'
+              : 'Sigue estos pasos y tu tienda estará publicada antes de que termines el café.',
+  steps: [
+    {
+      n: '01',
+      title: isEN ? 'Fork the repository' : 'Fork del repositorio',
+      desc:  isEN ? 'Go to the repo and click Fork → Create fork. Rename it to your store name.'
+                  : 'Ve al repo y haz clic en Fork → Create fork. Renómbralo con el nombre de tu tienda.',
+      code: 'github.com/devureca/qollqastore',
+    },
+    {
+      n: '02',
+      title: isEN ? 'Copy the Sheet template' : 'Copia el template de Sheet',
+      desc:  isEN ? 'Open the template and click File → Make a copy to get your own version.'
+                  : 'Abre el template y haz clic en Archivo → Hacer una copia para tener tu propia versión.',
+      code: 'File → Make a copy',
+    },
+    {
+      n: '03',
+      title: isEN ? 'Fill in your data' : 'Completa tus datos',
+      desc:  isEN ? 'Fill the 6 tabs: config, productos, slider, reservas, reseñas, info.'
+                  : 'Completa las 6 pestañas: config, productos, slider, reservas, reseñas, info.',
+      code: 'config / productos / slider / reservas / reseñas / info',
+    },
+    {
+      n: '04',
+      title: isEN ? 'Share the Sheet' : 'Comparte el Sheet',
+      desc:  isEN ? 'Click Share → Anyone with the link → Viewer.'
+                  : 'Haz clic en Compartir → Cualquier persona con el enlace → Lector.',
+      code: 'Share → Anyone with the link → Viewer',
+    },
+    {
+      n: '05',
+      title: isEN ? 'Copy the Sheet ID' : 'Copia el ID del Sheet',
+      desc:  isEN ? 'Copy the long string between /d/ and /edit in the URL.'
+                  : 'Copia la cadena larga entre /d/ y /edit en la URL.',
+      code: 'docs.google.com/spreadsheets/d/[ID]/edit',
+    },
+    {
+      n: '06',
+      title: isEN ? 'Deploy on Vercel' : 'Despliega en Vercel',
+      desc:  isEN ? 'Import your fork on Vercel, add SHEET_ID as environment variable and click Deploy.'
+                  : 'Importa tu fork en Vercel, agrega SHEET_ID como variable de entorno y haz Deploy.',
+      code: 'SHEET_ID = tu_id_aqui',
+    },
+  ],
+  cta: isEN ? 'View full guide on GitHub' : 'Ver guía completa en GitHub',
+}
+---
+
+<section id="install" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="reveal text-center mb-16">
+      <span class="badge mb-4 inline-block">{t.badge}</span>
+      <h2 class="font-display font-extrabold whitespace-pre-line mb-4"
+        style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text);">
+        {t.title}
+      </h2>
+      <p class="max-w-lg mx-auto text-base leading-relaxed" style="color: var(--text-muted);">
+        {t.sub}
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+      {t.steps.map((step, i) => (
+        <div class="reveal flex gap-5" style={`animation-delay: ${i * 0.08}s`}>
+
+          <!-- Number -->
+          <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-mono text-sm font-bold"
+            style="background-color: var(--bg-3); color: var(--accent); border: 1px solid var(--border);">
+            {step.n}
+          </div>
+
+          <!-- Content -->
+          <div class="flex flex-col gap-2 flex-1">
+            <h3 class="font-display font-bold text-lg" style="color: var(--text);">{step.title}</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--text-muted);">{step.desc}</p>
+            <div class="code-block text-xs mt-1" style="color: var(--accent);">
+              {step.code}
+            </div>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="reveal text-center">
+      <a href="https://github.com/devureca/qollqastore#instalación"
+        target="_blank" rel="noopener"
+        class="btn-ghost">
+        {t.cta} ↗
+      </a>
+    </div>
+
+  </div>
+</section>
