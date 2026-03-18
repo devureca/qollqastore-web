@@ -12,6 +12,10 @@
     --accent-hover: #C94210;
     --card-bg: #ffffff;
     --card-border: rgba(0, 0, 0, 0.08);
+    --brand: #E95420;
+    --sheet-green: #34A853;
+    --surface-0: #0a0a0a;
+    --surface-1: #141414;
 }
 
 .dark {
@@ -25,6 +29,8 @@
     --accent-hover: #ff6a35;
     --card-bg: #111111;
     --card-border: rgba(255, 255, 255, 0.06);
+    --surface-0: #0a0a0a;
+    --surface-1: #141414;
 }
 
 /* ── Google Fonts ──────────────────────────────────────────── */
