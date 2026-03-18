@@ -1,0 +1,108 @@
+---
+interface Props {
+    lang?: string;
+}
+
+const { lang = "es" } = Astro.props;
+const isEN = lang === "en";
+
+const t = {
+    tagline: isEN
+        ? "Free web catalog powered by Google Sheets."
+        : "Catálogo web gratuito con Google Sheets.",
+    madeWith: isEN ? "Made with ❤️ by" : "Hecho con ❤️ por",
+    rights: isEN
+        ? "Free for personal and commercial use."
+        : "Uso libre personal y comercial.",
+    links: [
+        { label: "GitHub", href: "https://github.com/devureca/qollqastore" },
+        { label: "Demo", href: "https://qollqastore.vercel.app" },
+        {
+            label: isEN ? "How it works" : "Cómo funciona",
+            href: "#how-it-works",
+        },
+        { label: isEN ? "Features" : "Características", href: "#features" },
+        { label: "Stack", href: "#stack" },
+        { label: isEN ? "Install" : "Instalación", href: "#install" },
+        { label: "FAQ", href: "#faq" },
+    ],
+};
+---
+
+<footer class="py-16 px-6" style="border-top: 1px solid var(--border);">
+    <div class="max-w-6xl mx-auto">
+        <div
+            class="flex flex-col md:flex-row items-start justify-between gap-10 mb-12"
+        >
+            <!-- Brand -->
+            <div class="flex flex-col gap-3 max-w-xs">
+                <a
+                    href={lang === "en" ? "/en" : "/"}
+                    class="font-display font-extrabold text-xl flex items-center gap-2"
+                >
+                    <span
+                        class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-sm font-bold"
+                        style="background-color: var(--accent);">Q</span
+                    >
+                    <span style="color: var(--text);"
+                        >Qollqa<span style="color: var(--accent);">Store</span
+                        ></span
+                    >
+                </a>
+                <p
+                    class="text-sm leading-relaxed"
+                    style="color: var(--text-muted);"
+                >
+                    {t.tagline}
+                </p>
+                <p class="text-xs" style="color: var(--text-muted);">
+                    {t.madeWith}
+                    <a
+                        href="https://github.com/devureca"
+                        target="_blank"
+                        rel="noopener"
+                        style="color: var(--accent);">devureca</a
+                    >
+                </p>
+            </div>
+
+            <!-- Links -->
+            <div class="flex flex-wrap gap-x-8 gap-y-3">
+                {
+                    t.links.map((link) => (
+                        <a
+                            href={link.href}
+                            target={
+                                link.href.startsWith("http")
+                                    ? "_blank"
+                                    : undefined
+                            }
+                            rel={
+                                link.href.startsWith("http")
+                                    ? "noopener"
+                                    : undefined
+                            }
+                            class="text-sm transition-colors hover:text-accent"
+                            style="color: var(--text-muted);"
+                        >
+                            {link.label}
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div
+            class="flex flex-col md:flex-row items-center justify-between gap-4 pt-8"
+            style="border-top: 1px solid var(--border);"
+        >
+            <p class="text-xs" style="color: var(--text-muted);">
+                © {new Date().getFullYear()} QollqaStore. {t.rights}
+            </p>
+            <p class="text-xs font-mono" style="color: var(--text-muted);">
+                Powered by <span style="color: var(--accent);">devureca</span>
+            </p>
+        </div>
+    </div>
+</footer>
