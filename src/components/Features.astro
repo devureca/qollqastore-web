@@ -1,0 +1,155 @@
+---
+interface Props {
+    lang?: string;
+}
+
+const { lang = "es" } = Astro.props;
+const isEN = lang === "en";
+
+const t = {
+    badge: isEN ? "✦ Features" : "✦ Características",
+    title: isEN
+        ? "Everything your\ncatalog needs."
+        : "Todo lo que necesita\ntu catálogo.",
+    features: [
+        {
+            icon: "◎",
+            title: isEN ? "Zero cost" : "Cero costos",
+            desc: isEN
+                ? "Hosting on Vercel free. Database on Google Sheets free. No surprises ever."
+                : "Hosting en Vercel gratis. Base de datos en Google Sheets gratis. Sin sorpresas.",
+            big: true,
+        },
+        {
+            icon: "⚡",
+            title: isEN ? "Instant updates" : "Actualización instantánea",
+            desc: isEN
+                ? "Edit your Sheet and changes appear in your store within seconds."
+                : "Edita tu Sheet y los cambios se reflejan en tu tienda en segundos.",
+            big: false,
+        },
+        {
+            icon: "◐",
+            title: isEN ? "Dark mode" : "Modo oscuro",
+            desc: isEN
+                ? "Light and dark mode built in. Your catalog looks great in both."
+                : "Light y dark mode incluidos. Tu catálogo se ve increíble en ambos.",
+            big: false,
+        },
+        {
+            icon: "⊞",
+            title: isEN ? "Fully responsive" : "Responsive total",
+            desc: isEN
+                ? "Optimized for mobile, tablet and desktop with no extra config."
+                : "Optimizado para móvil, tablet y escritorio sin configuración extra.",
+            big: false,
+        },
+        {
+            icon: "◉",
+            title: isEN ? "WhatsApp built in" : "WhatsApp integrado",
+            desc: isEN
+                ? "Floating button and direct reservations straight from the catalog."
+                : "Botón flotante y reservas directas desde el catálogo.",
+            big: false,
+        },
+        {
+            icon: "⌕",
+            title: isEN ? "Search & filters" : "Búsqueda y filtros",
+            desc: isEN
+                ? "Category filters, real-time search and infinite scroll 20 at a time."
+                : "Filtros por categoría, búsqueda en tiempo real y scroll infinito.",
+            big: false,
+        },
+        {
+            icon: "↻",
+            title: isEN ? "Auto-updates" : "Auto-actualizaciones",
+            desc: isEN
+                ? "Every Monday your store automatically gets improvements from the repo."
+                : "Cada lunes tu tienda recibe mejoras automáticamente desde el repo.",
+            big: false,
+        },
+        {
+            icon: "✎",
+            title: isEN ? "No code" : "Sin código",
+            desc: isEN
+                ? "All customization from the Sheet: colors, name, social links and more."
+                : "Toda la personalización desde el Sheet: colores, nombre, redes y más.",
+            big: true,
+        },
+    ],
+};
+
+const bigFeatures = t.features.filter((f) => f.big);
+const smallFeatures = t.features.filter((f) => !f.big);
+---
+
+<section id="features" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="reveal text-center mb-16">
+            <span class="badge mb-4 inline-block">{t.badge}</span>
+            <h2
+                class="font-display font-extrabold whitespace-pre-line"
+                style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text);"
+            >
+                {t.title}
+            </h2>
+        </div>
+
+        <!-- Big features row -->
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+            {
+                bigFeatures.map((f, i) => (
+                    <div
+                        class="reveal card flex flex-col gap-4"
+                        style={`animation-delay: ${i * 0.1}s`}
+                    >
+                        <span class="text-4xl" style="color: var(--accent);">
+                            {f.icon}
+                        </span>
+                        <h3
+                            class="font-display font-bold text-2xl"
+                            style="color: var(--text);"
+                        >
+                            {f.title}
+                        </h3>
+                        <p
+                            class="text-base leading-relaxed"
+                            style="color: var(--text-muted);"
+                        >
+                            {f.desc}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+
+        <!-- Small features grid -->
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {
+                smallFeatures.map((f, i) => (
+                    <div
+                        class="reveal card flex flex-col gap-3"
+                        style={`animation-delay: ${i * 0.08}s`}
+                    >
+                        <span class="text-2xl" style="color: var(--accent);">
+                            {f.icon}
+                        </span>
+                        <h3
+                            class="font-display font-bold text-lg"
+                            style="color: var(--text);"
+                        >
+                            {f.title}
+                        </h3>
+                        <p
+                            class="text-sm leading-relaxed"
+                            style="color: var(--text-muted);"
+                        >
+                            {f.desc}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
