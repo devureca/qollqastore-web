@@ -1,0 +1,86 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+const isEN = lang === 'en';
+
+const t = {
+  badge: isEN ? '✦ How it works' : '✦ Cómo funciona',
+  title: isEN ? 'Three steps.\nDone.' : 'Tres pasos.\nListo.',
+  sub:   isEN ? 'No weird configs, no consoles, no tokens. Just Google Sheets and Vercel.'
+              : 'Sin configuraciones raras, sin consolas, sin tokens. Solo Google Sheets y Vercel.',
+  steps: [
+    {
+      number: '01',
+      title:  isEN ? 'Fork the repository'       : 'Fork del repositorio',
+      desc:   isEN ? 'Fork the repo on GitHub. Name it after your store — that name becomes your URL.'
+                   : 'Haz fork del repo en GitHub. Nómbralo como tu tienda — ese nombre será tu URL.',
+      code:   'github.com/devureca/qollqastore → Fork',
+    },
+    {
+      number: '02',
+      title:  isEN ? 'Connect your Google Sheet' : 'Conecta tu Google Sheet',
+      desc:   isEN ? 'Copy the template, fill in your products, colors and info. Then paste the Sheet ID in Vercel.'
+                   : 'Copia el template, completa tus productos, colores e info. Luego pega el ID del Sheet en Vercel.',
+      code:   'SHEET_ID=1BxiMVs0XRA5nFMdKvBd...',
+    },
+    {
+      number: '03',
+      title:  isEN ? 'Deploy and done!'           : '¡Despliega y listo!',
+      desc:   isEN ? 'Click Deploy in Vercel. Your store goes live instantly. Edit the Sheet anytime to update it.'
+                   : 'Haz clic en Deploy en Vercel. Tu tienda queda en línea al instante. Edita el Sheet cuando quieras.',
+      code:   'tutienda.vercel.app ✓ Live',
+    },
+  ]
+}
+---
+
+<section id="how-it-works" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="reveal text-center mb-16">
+      <span class="badge mb-4 inline-block">{t.badge}</span>
+      <h2 class="font-display font-extrabold mb-4 whitespace-pre-line"
+        style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text);">
+        {t.title}
+      </h2>
+      <p class="max-w-lg mx-auto text-base leading-relaxed" style="color: var(--text-muted);">
+        {t.sub}
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="grid md:grid-cols-3 gap-6">
+      {t.steps.map((step, i) => (
+        <div class="reveal card relative" style={`animation-delay: ${i * 0.1}s`}>
+
+          <!-- Number -->
+          <span class="font-display font-extrabold text-5xl mb-4 block"
+            style="color: var(--accent); opacity: 0.25; line-height: 1;">
+            {step.number}
+          </span>
+
+          <!-- Connector dot -->
+          <div class="absolute top-8 right-6 w-2 h-2 rounded-full" style="background-color: var(--accent);"></div>
+
+          <h3 class="font-display font-bold text-xl mb-3" style="color: var(--text);">
+            {step.title}
+          </h3>
+          <p class="text-sm leading-relaxed mb-5" style="color: var(--text-muted);">
+            {step.desc}
+          </p>
+
+          <!-- Code snippet -->
+          <div class="code-block text-xs" style="color: var(--accent);">
+            {step.code}
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
