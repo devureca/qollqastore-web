@@ -8,104 +8,145 @@ const isEN = lang === 'en';
 
 const t = {
   badge: isEN ? '✦ Installation' : '✦ Instalación',
-  title: isEN ? 'Live in\n5 minutes.' : 'En línea en\n5 minutos.',
-  sub:   isEN ? 'Follow these steps and your store will be published before you finish your coffee.'
-              : 'Sigue estos pasos y tu tienda estará publicada antes de que termines el café.',
+  title: isEN ? 'Up and running\nin minutes.' : 'En línea\nen minutos.',
   steps: [
     {
-      n: '01',
-      title: isEN ? 'Fork the repository' : 'Fork del repositorio',
-      desc:  isEN ? 'Go to the repo and click Fork → Create fork. Rename it to your store name.'
-                  : 'Ve al repo y haz clic en Fork → Create fork. Renómbralo con el nombre de tu tienda.',
-      code: 'github.com/devureca/qollqastore',
+      id: 'step1',
+      tab:   isEN ? 'Fork the repo'        : 'Fork del repo',
+      title: isEN ? 'Fork the repository'  : 'Haz fork del repositorio',
+      desc:  isEN ? 'Go to GitHub and click Fork. Rename it to your store name — that will be your URL.'
+                  : 'Ve a GitHub y haz clic en Fork. Renómbralo con el nombre de tu tienda — ese será tu URL.',
     },
     {
-      n: '02',
-      title: isEN ? 'Copy the Sheet template' : 'Copia el template de Sheet',
-      desc:  isEN ? 'Open the template and click File → Make a copy to get your own version.'
-                  : 'Abre el template y haz clic en Archivo → Hacer una copia para tener tu propia versión.',
-      code: 'File → Make a copy',
+      id: 'step2',
+      tab:   isEN ? 'Copy the Sheet'       : 'Copia el Sheet',
+      title: isEN ? 'Copy the Google Sheet template' : 'Copia el template de Google',
+      desc:  isEN ? 'Open our template and click File → Make a copy. This will be your store\'s database.'
+                  : 'Abre nuestro template y haz clic en Archivo → Hacer una copia. Esta será la base de datos de tu tienda.',
     },
     {
-      n: '03',
-      title: isEN ? 'Fill in your data' : 'Completa tus datos',
-      desc:  isEN ? 'Fill the 6 tabs: config, productos, slider, reservas, reseñas, info.'
-                  : 'Completa las 6 pestañas: config, productos, slider, reservas, reseñas, info.',
-      code: 'config / productos / slider / reservas / reseñas / info',
+      id: 'step3',
+      tab:   isEN ? 'Fill your data'       : 'Completa tus datos',
+      title: isEN ? 'Fill in your products and info' : 'Completa tus productos e info',
+      desc:  isEN ? 'Fill the 6 tabs with your products, colors, social links and contact info. No code needed.'
+                  : 'Completa las 6 pestañas con tus productos, colores, redes sociales e información de contacto. Sin código.',
     },
     {
-      n: '04',
-      title: isEN ? 'Share the Sheet' : 'Comparte el Sheet',
-      desc:  isEN ? 'Click Share → Anyone with the link → Viewer.'
-                  : 'Haz clic en Compartir → Cualquier persona con el enlace → Lector.',
-      code: 'Share → Anyone with the link → Viewer',
+      id: 'step4',
+      tab:   isEN ? 'Share the Sheet'      : 'Comparte el Sheet',
+      title: isEN ? 'Make the Sheet public' : 'Haz el Sheet público',
+      desc:  isEN ? 'Click Share → Anyone with the link → Viewer. This allows your store to read the data.'
+                  : 'Haz clic en Compartir → Cualquier persona con el enlace → Lector. Esto permite que tu tienda lea los datos.',
     },
     {
-      n: '05',
-      title: isEN ? 'Copy the Sheet ID' : 'Copia el ID del Sheet',
-      desc:  isEN ? 'Copy the long string between /d/ and /edit in the URL.'
-                  : 'Copia la cadena larga entre /d/ y /edit en la URL.',
-      code: 'docs.google.com/spreadsheets/d/[ID]/edit',
+      id: 'step5',
+      tab:   isEN ? 'Deploy on Vercel'     : 'Despliega en Vercel',
+      title: isEN ? 'Deploy your store on Vercel' : 'Despliega tu tienda en Vercel',
+      desc:  isEN ? 'Import your fork on Vercel, add your Sheet ID as an environment variable and click Deploy. Done!'
+                  : 'Importa tu fork en Vercel, agrega el ID de tu Sheet como variable de entorno y haz clic en Deploy. ¡Listo!',
     },
-    {
-      n: '06',
-      title: isEN ? 'Deploy on Vercel' : 'Despliega en Vercel',
-      desc:  isEN ? 'Import your fork on Vercel, add SHEET_ID as environment variable and click Deploy.'
-                  : 'Importa tu fork en Vercel, agrega SHEET_ID como variable de entorno y haz Deploy.',
-      code: 'SHEET_ID = tu_id_aqui',
-    },
-  ],
-  cta: isEN ? 'View full guide on GitHub' : 'Ver guía completa en GitHub',
+  ]
 }
 ---
 
-<section id="install" class="py-24 px-6 md:px-8">
+<section id="install" class="py-24 px-4 md:px-8">
   <div class="max-w-6xl mx-auto">
 
     <!-- Header -->
     <div class="reveal text-center mb-16">
       <span class="badge mb-4 inline-block">{t.badge}</span>
-      <h2 class="font-display font-extrabold whitespace-pre-line mb-4"
+      <h2 class="font-display font-extrabold"
         style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text);">
         {t.title}
       </h2>
-      <p class="max-w-lg mx-auto text-base leading-relaxed" style="color: var(--text-muted);">
-        {t.sub}
-      </p>
     </div>
 
-    <!-- Steps -->
-    <div class="grid md:grid-cols-2 gap-6 mb-12">
-      {t.steps.map((step, i) => (
-        <div class="reveal flex gap-5" style={`animation-delay: ${i * 0.08}s`}>
+    <!-- Tabs layout -->
+    <div class="reveal flex flex-col md:flex-row gap-4 md:gap-8">
 
-          <!-- Number -->
-          <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-mono text-sm font-bold"
-            style="background-color: var(--bg-3); color: var(--accent); border: 1px solid var(--border);">
-            {step.n}
-          </div>
+      <!-- Left: tabs -->
+      <div class="flex flex-row md:flex-col gap-2 md:w-56 shrink-0 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
+        {t.steps.map((step, i) => (
+          <button
+            class="install-tab text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 shrink-0 md:shrink"
+            data-tab={step.id}
+            style={i === 0
+              ? 'background-color: var(--accent); color: #fff;'
+              : 'background-color: var(--bg-2); color: var(--text-muted); border: 1px solid var(--border);'
+            }
+          >
+            <span class="font-mono text-xs block mb-0.5 opacity-60">0{i + 1}</span>
+            {step.tab}
+          </button>
+        ))}
+      </div>
 
-          <!-- Content -->
-          <div class="flex flex-col gap-2 flex-1">
-            <h3 class="font-display font-bold text-lg" style="color: var(--text);">{step.title}</h3>
-            <p class="text-sm leading-relaxed" style="color: var(--text-muted);">{step.desc}</p>
-            <div class="code-block text-xs mt-1" style="color: var(--accent);">
-              {step.code}
+      <!-- Right: content -->
+      <div class="flex-1 rounded-2xl overflow-hidden" style="border: 1px solid var(--border);">
+        {t.steps.map((step, i) => (
+          <div
+            class="install-panel h-full"
+            data-panel={step.id}
+            style={i !== 0 ? 'display: none;' : ''}
+          >
+            <!-- Video placeholder -->
+            <div class="w-full flex items-center justify-center"
+              style="background-color: var(--bg-3); aspect-ratio: 16/9;">
+              <div class="flex flex-col items-center gap-3" style="color: var(--text-muted);">
+                <div class="w-14 h-14 rounded-full flex items-center justify-center"
+                  style="border: 2px solid var(--border);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+                <span class="text-xs font-mono">Video — paso 0{i + 1}</span>
+              </div>
             </div>
+
+            <!-- Text -->
+            <div class="p-6 md:p-8">
+              <h3 class="font-display font-bold text-xl mb-3" style="color: var(--text);">
+                {step.title}
+              </h3>
+              <p class="text-base leading-relaxed" style="color: var(--text-muted);">
+                {step.desc}
+              </p>
+            </div>
+
           </div>
+        ))}
+      </div>
 
-        </div>
-      ))}
-    </div>
-
-    <!-- CTA -->
-    <div class="reveal text-center">
-      <a href="https://github.com/devureca/qollqastore#instalación"
-        target="_blank" rel="noopener"
-        class="btn-ghost">
-        {t.cta} ↗
-      </a>
     </div>
 
   </div>
 </section>
+
+<script>
+  const tabs = document.querySelectorAll('.install-tab');
+  const panels = document.querySelectorAll('.install-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-tab');
+
+      // Reset all tabs
+      tabs.forEach(t => {
+        (t as HTMLElement).style.backgroundColor = 'var(--bg-2)';
+        (t as HTMLElement).style.color = 'var(--text-muted)';
+        (t as HTMLElement).style.border = '1px solid var(--border)';
+      });
+
+      // Active tab
+      (tab as HTMLElement).style.backgroundColor = 'var(--accent)';
+      (tab as HTMLElement).style.color = '#fff';
+      (tab as HTMLElement).style.border = 'none';
+
+      // Show panel
+      panels.forEach(p => {
+        (p as HTMLElement).style.display =
+          p.getAttribute('data-panel') === target ? '' : 'none';
+      });
+    });
+  });
+</script>
