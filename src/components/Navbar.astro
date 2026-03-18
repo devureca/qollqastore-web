@@ -1,0 +1,191 @@
+---
+interface Props {
+    lang?: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const isEN = lang === "en";
+
+const nav = {
+    features: isEN ? "Features" : "Características",
+    howItWorks: isEN ? "How it works" : "Cómo funciona",
+    stack: isEN ? "Stack" : "Stack",
+    install: isEN ? "Install" : "Instalación",
+    demo: isEN ? "Live demo" : "Ver demo",
+    github: "GitHub",
+    otherLang: isEN ? "ES" : "EN",
+    otherHref: isEN ? "/" : "/en",
+};
+---
+
+<header
+    id="navbar"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a
+            href={lang === "en" ? "/en" : "/"}
+            class="font-display font-800 text-lg tracking-tight flex items-center gap-2"
+        >
+            <span
+                class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-sm font-bold"
+                style="background-color: var(--accent);">Q</span
+            >
+            <span style="color: var(--text);"
+                >Qollqa<span style="color: var(--accent);">Store</span></span
+            >
+        </a>
+
+        <!-- Nav links (desktop) -->
+        <nav
+            class="hidden md:flex items-center gap-6 text-sm font-medium"
+            style="color: var(--text-muted);"
+        >
+            <a href="#how-it-works" class="nav-link">{nav.howItWorks}</a>
+            <a href="#features" class="nav-link">{nav.features}</a>
+            <a href="#stack" class="nav-link">{nav.stack}</a>
+            <a href="#install" class="nav-link">{nav.install}</a>
+        </nav>
+
+        <!-- Right side -->
+        <div class="flex items-center gap-3">
+            <!-- Lang switcher -->
+            <a
+                href={nav.otherHref}
+                class="text-xs font-mono px-2 py-1 rounded-md transition-colors"
+                style="color: var(--text-muted); border: 1px solid var(--border);"
+            >
+                {nav.otherLang}
+            </a>
+
+            <!-- Theme toggle -->
+            <button
+                id="theme-toggle"
+                aria-label="Toggle theme"
+                class="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                style="border: 1px solid var(--border); color: var(--text-muted);"
+            >
+                <svg
+                    id="icon-sun"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="hidden"
+                >
+                    <circle cx="12" cy="12" r="5"></circle><line
+                        x1="12"
+                        y1="1"
+                        x2="12"
+                        y2="3"></line><line x1="12" y1="21" x2="12" y2="23"
+                    ></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line
+                        x1="18.36"
+                        y1="18.36"
+                        x2="19.78"
+                        y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line><line
+                        x1="21"
+                        y1="12"
+                        x2="23"
+                        y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line
+                        x1="18.36"
+                        y1="5.64"
+                        x2="19.78"
+                        y2="4.22"></line>
+                </svg>
+                <svg
+                    id="icon-moon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                    ></path>
+                </svg>
+            </button>
+
+            <!-- GitHub -->
+            <a
+                href="https://github.com/devureca/qollqastore"
+                target="_blank"
+                rel="noopener"
+                class="hidden md:flex btn-ghost py-1.5 px-4 text-sm"
+            >
+                GitHub ↗
+            </a>
+
+            <!-- Demo CTA -->
+            <a
+                href="https://qollqastore.vercel.app"
+                target="_blank"
+                rel="noopener"
+                class="btn-primary py-1.5 px-4 text-sm"
+            >
+                {nav.demo}
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Spacer -->
+<div class="h-16"></div>
+
+<style>
+    #navbar {
+        background-color: transparent;
+    }
+    #navbar.scrolled {
+        background-color: var(--bg);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+    .nav-link {
+        transition: color 0.2s ease;
+    }
+    .nav-link:hover {
+        color: var(--accent);
+    }
+</style>
+
+<script>
+    // Scroll effect
+    const navbar = document.getElementById("navbar");
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 20) {
+            navbar?.classList.add("scrolled");
+        } else {
+            navbar?.classList.remove("scrolled");
+        }
+    });
+
+    // Theme toggle
+    const btn = document.getElementById("theme-toggle");
+    const iconSun = document.getElementById("icon-sun");
+    const iconMoon = document.getElementById("icon-moon");
+
+    function updateIcons() {
+        const isDark = document.documentElement.classList.contains("dark");
+        iconSun?.classList.toggle("hidden", !isDark);
+        iconMoon?.classList.toggle("hidden", isDark);
+    }
+
+    updateIcons();
+
+    btn?.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        updateIcons();
+    });
+</script>
