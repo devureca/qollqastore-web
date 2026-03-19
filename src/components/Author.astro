@@ -1,0 +1,246 @@
+---
+interface Props {
+    lang?: string;
+}
+
+const { lang = "es" } = Astro.props;
+const isEN = lang === "en";
+
+const t = {
+    badge: isEN ? "✦ The maker" : "✦ El creador",
+    name: "Gianfranco Ureta",
+    role: isEN ? "Design & Development" : "Diseño & Desarrollo",
+    bio: isEN
+        ? "I turn complex ideas into scalable digital products. From Huancayo, Perú I design intuitive interfaces and robust architectures under one clear premise: high-level technology should be accessible to those who seek to make an impact."
+        : "Transformo ideas complejas en productos digitales escalables. Desde Huancayo, Perú diseño interfaces intuitivas y arquitecturas robustas bajo una premisa clara: la tecnología de alto nivel debe ser accesible para quienes buscan generar impacto.",
+};
+---
+
+<section id="author" class="py-24 px-4 md:px-8">
+    <div class="max-w-5xl mx-auto">
+        <div class="reveal author-card">
+            <!-- Left: full-height photo -->
+            <div class="author-photo-wrap">
+                <img
+                    src="/Gianfranco.png"
+                    alt="Gianfranco Ureta"
+                    draggable="false"
+                />
+                <!-- Fade to card background on the right edge so it blends -->
+                <div class="author-photo-fade" aria-hidden="true"></div>
+            </div>
+
+            <!-- Right: info -->
+            <div class="author-info">
+                <span class="badge mb-4 inline-block">{t.badge}</span>
+
+                <h2 class="author-name">{t.name}</h2>
+                <p class="author-role">
+                    <span style="color: var(--accent);">{t.role}</span>
+                    {isEN ? " · digital products" : " · productos digitales"}
+                </p>
+
+                <p class="author-bio">{t.bio}</p>
+
+                <!-- Social links -->
+                <div class="author-links">
+                    <a
+                        href="https://github.com/devureca"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="author-link"
+                        aria-label="GitHub"
+                    >
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"
+                            ></path>
+                        </svg>
+                        <span>devureca</span>
+                    </a>
+
+                    <a
+                        href="https://twitter.com/devureca"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="author-link"
+                        aria-label="Twitter / X"
+                    >
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                            ></path>
+                        </svg>
+                        <span>@devureca</span>
+                    </a>
+
+                    <a
+                        href="mailto:hola@devureca.com"
+                        class="author-link"
+                        aria-label="Email"
+                    >
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            aria-hidden="true"
+                        >
+                            <rect x="2" y="4" width="20" height="16" rx="2"
+                            ></rect>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                            ></path>
+                        </svg>
+                        <span>hola@devureca.com</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ── Card ── */
+    .author-card {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        min-height: 340px;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        border: 1px solid var(--card-border);
+        background-color: var(--card-bg);
+    }
+
+    /* ── Photo ── */
+    .author-photo-wrap {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .author-photo-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+        filter: grayscale(20%);
+    }
+
+    /* Gradient fade on the right so photo blends into card content */
+    .author-photo-fade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to right,
+            transparent 55%,
+            var(--card-bg) 100%
+        );
+    }
+
+    /* ── Info ── */
+    .author-info {
+        padding: 2.5rem 2.5rem 2.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .author-name {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        color: var(--text);
+        letter-spacing: -0.02em;
+        margin-bottom: 0.25rem;
+        line-height: 1.1;
+    }
+
+    .author-role {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        margin-bottom: 1.25rem;
+    }
+
+    .author-bio {
+        font-size: 0.925rem;
+        line-height: 1.75;
+        color: var(--text-muted);
+        margin-bottom: 1.75rem;
+        max-width: 42ch;
+    }
+
+    /* ── Social links ── */
+    .author-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.625rem;
+    }
+
+    .author-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background-color: var(--bg-2);
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition:
+            border-color 0.2s ease,
+            color 0.2s ease;
+    }
+
+    .author-link:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    /* ── Mobile: stack vertically ── */
+    @media (max-width: 640px) {
+        .author-card {
+            grid-template-columns: 1fr;
+        }
+
+        .author-photo-wrap {
+            height: 260px;
+        }
+
+        .author-photo-wrap img {
+            object-position: center 20%;
+        }
+
+        /* On mobile fade bottom instead of right */
+        .author-photo-fade {
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                var(--card-bg) 100%
+            );
+        }
+
+        .author-info {
+            padding: 1.5rem;
+        }
+
+        .author-bio {
+            max-width: 100%;
+        }
+    }
+</style>
