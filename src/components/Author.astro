@@ -19,18 +19,15 @@ const t = {
 <section id="author" class="py-24 px-4 md:px-8">
     <div class="max-w-5xl mx-auto">
         <div class="reveal author-card">
-            <!-- Left: full-height photo -->
             <div class="author-photo-wrap">
                 <img
                     src="/Gianfranco.png"
                     alt="Gianfranco Ureta"
                     draggable="false"
                 />
-                <!-- Fade to card background on the right edge so it blends -->
                 <div class="author-photo-fade" aria-hidden="true"></div>
             </div>
 
-            <!-- Right: info -->
             <div class="author-info">
                 <span class="badge mb-4 inline-block">{t.badge}</span>
 
@@ -42,7 +39,6 @@ const t = {
 
                 <p class="author-bio">{t.bio}</p>
 
-                <!-- Social links -->
                 <div class="author-links">
                     <a
                         href="https://github.com/devureca"
@@ -114,7 +110,6 @@ const t = {
 </section>
 
 <style>
-    /* ── Card ── */
     .author-card {
         display: grid;
         grid-template-columns: 380px 1fr;
@@ -125,7 +120,6 @@ const t = {
         background-color: var(--card-bg);
     }
 
-    /* ── Photo ── */
     .author-photo-wrap {
         position: relative;
         overflow: hidden;
@@ -140,18 +134,19 @@ const t = {
         filter: grayscale(20%);
     }
 
-    /* Gradient fade on the right so photo blends into card content */
     .author-photo-fade {
-        position: absolute;
-        inset: 0;
         background: linear-gradient(
             to right,
             transparent 55%,
             var(--card-bg) 100%
         );
+        opacity: 0;
     }
 
-    /* ── Info ── */
+    .dark .author-photo-fade {
+        opacity: 1;
+    }
+
     .author-info {
         padding: 2.5rem 2.5rem 2.5rem 1.5rem;
         display: flex;
@@ -183,7 +178,6 @@ const t = {
         max-width: 42ch;
     }
 
-    /* ── Social links ── */
     .author-links {
         display: flex;
         flex-wrap: wrap;
@@ -226,13 +220,17 @@ const t = {
             object-position: center 20%;
         }
 
-        /* On mobile fade bottom instead of right */
         .author-photo-fade {
+            opacity: 0;
+        }
+
+        .dark .author-photo-fade {
             background: linear-gradient(
                 to bottom,
                 transparent 50%,
                 var(--card-bg) 100%
             );
+            opacity: 1;
         }
 
         .author-info {
