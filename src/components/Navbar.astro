@@ -15,6 +15,18 @@ const nav = {
     otherLang: isEN ? "ES" : "EN",
     otherHref: isEN ? "/" : "/en",
 };
+
+// Fetch stars at build time — no token needed, public repo
+let stars = "—";
+try {
+    const res = await fetch(
+        "https://api.github.com/repos/devureca/qollqastore",
+    );
+    if (res.ok) {
+        const data = await res.json();
+        stars = data.stargazers_count?.toLocaleString() ?? "—";
+    }
+} catch {}
 ---
 
 <header
@@ -63,13 +75,38 @@ const nav = {
             >
         </nav>
 
-        <!-- Right side -->
+        <!-- Right side (desktop) -->
         <div class="hidden md:flex items-center gap-5">
+            <!-- GitHub stars -->
+            <a
+                href="https://github.com/devureca/qollqastore"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="stars-badge"
+                aria-label={`${stars} stars on GitHub`}
+            >
+                <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    ></path>
+                </svg>
+                <span>{stars}</span>
+            </a>
+
+            <!-- Lang toggle -->
             <a
                 href={nav.otherHref}
                 class="text-sm font-medium nav-link"
                 style="color: var(--text-muted);">{nav.otherLang}</a
             >
+
+            <!-- Theme toggle -->
             <button
                 id="theme-toggle"
                 aria-label="Toggle theme"
@@ -122,24 +159,38 @@ const nav = {
                     ></path>
                 </svg>
             </button>
-            <!-- <a
-                href="https://qollqastore.vercel.app"
-                target="_blank"
-                rel="noopener"
-                class="text-sm font-medium nav-link"
-                style="color: var(--text-muted);"
-            >
-                {nav.demo} ↗
-            </a> -->
         </div>
 
         <!-- Mobile right -->
         <div class="flex md:hidden items-center gap-3">
+            <!-- GitHub stars (mobile) -->
+            <a
+                href="https://github.com/devureca/qollqastore"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="stars-badge"
+                aria-label={`${stars} stars on GitHub`}
+            >
+                <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    ></path>
+                </svg>
+                <span>{stars}</span>
+            </a>
+
             <a
                 href={nav.otherHref}
                 class="text-sm font-medium"
                 style="color: var(--text-muted);">{nav.otherLang}</a
             >
+
             <button
                 id="theme-toggle-mobile"
                 aria-label="Toggle theme"
@@ -192,6 +243,7 @@ const nav = {
                     ></path>
                 </svg>
             </button>
+
             <button
                 id="menu-toggle"
                 aria-label="Toggle menu"
@@ -248,14 +300,6 @@ const nav = {
             style="color: var(--text); border-color: var(--border);">FAQ</a
         >
     </nav>
-    <!-- <div class="flex flex-col gap-3 mt-4">
-        <a
-            href="https://github.com/devureca/qollqastore"
-            target="_blank"
-            rel="noopener"
-            class="btn-ghost text-center">GitHub ↗</a
-        >
-    </div> -->
 </div>
 
 <!-- Spacer -->
@@ -271,6 +315,29 @@ const nav = {
     .nav-link:hover {
         color: var(--text) !important;
     }
+
+    /* ── Stars badge ── */
+    .stars-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background-color: var(--bg-2);
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition:
+            border-color 0.2s ease,
+            color 0.2s ease;
+    }
+    .stars-badge:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
     #mobile-menu.open {
         opacity: 1;
         pointer-events: all;
