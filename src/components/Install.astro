@@ -12,38 +12,35 @@ const t = {
   steps: [
     {
       id: 'step1',
+      tab:   isEN ? 'What is QollqaStore?' : 'Qué es QollqaStore',
+      title: isEN ? 'What is QollqaStore?' : '¿Qué es QollqaStore?',
+      desc:  isEN ? 'QollqaStore turns a Google Sheet into a beautiful online store. Free, no technical knowledge needed.'
+                  : 'QollqaStore convierte una hoja de Google en una tienda online bonita. Gratis, sin conocimientos técnicos.',
+      video: 'https://res.cloudinary.com/dpabb0ryo/video/upload/v1774221211/01_Qollqastore_e77j3l.mp4',
+    },
+    {
+      id: 'step2',
       tab:   isEN ? 'Fork the repo'        : 'Fork del repo',
       title: isEN ? 'Fork the repository'  : 'Haz fork del repositorio',
       desc:  isEN ? 'Go to GitHub and click Fork. Rename it to your store name — that will be your URL.'
                   : 'Ve a GitHub y haz clic en Fork. Renómbralo con el nombre de tu tienda — ese será tu URL.',
+      video: 'https://res.cloudinary.com/dpabb0ryo/video/upload/v1774237259/02_Github_sk0xog.mp4',
     },
     {
-      id: 'step2',
+      id: 'step3',
       tab:   isEN ? 'Copy the Sheet'       : 'Copia el Sheet',
       title: isEN ? 'Copy the Google Sheet template' : 'Copia el template de Google',
       desc:  isEN ? 'Open our template and click File → Make a copy. This will be your store\'s database.'
                   : 'Abre nuestro template y haz clic en Archivo → Hacer una copia. Esta será la base de datos de tu tienda.',
-    },
-    {
-      id: 'step3',
-      tab:   isEN ? 'Fill your data'       : 'Completa tus datos',
-      title: isEN ? 'Fill in your products and info' : 'Completa tus productos e info',
-      desc:  isEN ? 'Fill the 6 tabs with your products, colors, social links and contact info. No code needed.'
-                  : 'Completa las 6 pestañas con tus productos, colores, redes sociales e información de contacto. Sin código.',
+      video: 'https://res.cloudinary.com/dpabb0ryo/video/upload/v1774237261/03_Sheet_z7kxrn.mp4',
     },
     {
       id: 'step4',
-      tab:   isEN ? 'Share the Sheet'      : 'Comparte el Sheet',
-      title: isEN ? 'Make the Sheet public' : 'Haz el Sheet público',
-      desc:  isEN ? 'Click Share → Anyone with the link → Viewer. This allows your store to read the data.'
-                  : 'Haz clic en Compartir → Cualquier persona con el enlace → Lector. Esto permite que tu tienda lea los datos.',
-    },
-    {
-      id: 'step5',
       tab:   isEN ? 'Deploy on Vercel'     : 'Despliega en Vercel',
       title: isEN ? 'Deploy your store on Vercel' : 'Despliega tu tienda en Vercel',
       desc:  isEN ? 'Import your fork on Vercel, add your Sheet ID as an environment variable and click Deploy. Done!'
                   : 'Importa tu fork en Vercel, agrega el ID de tu Sheet como variable de entorno y haz clic en Deploy. ¡Listo!',
+      video: 'https://res.cloudinary.com/dpabb0ryo/video/upload/v1774239361/04_Vercel_lossy_qhjitn.mp4',
     },
   ]
 }
@@ -53,10 +50,10 @@ const t = {
   <div class="max-w-6xl mx-auto">
 
     <!-- Header -->
-    <div class="reveal text-center mb-16">
+    <div class="reveal text-center mb-8">
       <span class="badge mb-4 inline-block">{t.badge}</span>
       <h2 class="font-display font-extrabold"
-        style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text);">
+        style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text); font-weight: 800; letter-spacing: -0.03em;">
         {t.title}
       </h2>
     </div>
@@ -89,19 +86,34 @@ const t = {
             data-panel={step.id}
             style={i !== 0 ? 'display: none;' : ''}
           >
-            <!-- Video placeholder -->
-            <div class="w-full flex items-center justify-center"
-              style="background-color: var(--bg-3); aspect-ratio: 16/9;">
-              <div class="flex flex-col items-center gap-3" style="color: var(--text-muted);">
-                <div class="w-14 h-14 rounded-full flex items-center justify-center"
-                  style="border: 2px solid var(--border);">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
-                <span class="text-xs font-mono">Video — paso 0{i + 1}</span>
+            <!-- Video -->
+            {step.video ? (
+              <div class="w-full" style="background-color: var(--bg-3); aspect-ratio: 16/9;">
+                <video
+  class="w-full h-full object-cover"
+  src={step.video}
+  controls
+  preload="metadata"
+  playsinline
+  controlslist="nodownload"
+  oncontextmenu="return false;"
+/>
               </div>
-            </div>
+            ) : (
+              <!-- Placeholder si no hay video aún -->
+              <div class="w-full flex items-center justify-center"
+                style="background-color: var(--bg-3); aspect-ratio: 16/9;">
+                <div class="flex flex-col items-center gap-3" style="color: var(--text-muted);">
+                  <div class="w-14 h-14 rounded-full flex items-center justify-center"
+                    style="border: 2px solid var(--border);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-mono">Video — próximamente</span>
+                </div>
+              </div>
+            )}
 
             <!-- Text -->
             <div class="p-6 md:p-8">
@@ -130,19 +142,24 @@ const t = {
     tab.addEventListener('click', () => {
       const target = tab.getAttribute('data-tab');
 
-      // Reset all tabs
+      // Pausar todos los videos
+      document.querySelectorAll('.install-panel video').forEach(v => {
+        (v as HTMLVideoElement).pause();
+      });
+
+      // Reset tabs
       tabs.forEach(t => {
         (t as HTMLElement).style.backgroundColor = 'var(--bg-2)';
         (t as HTMLElement).style.color = 'var(--text-muted)';
         (t as HTMLElement).style.border = '1px solid var(--border)';
       });
 
-      // Active tab
+      // Tab activo
       (tab as HTMLElement).style.backgroundColor = 'var(--accent)';
       (tab as HTMLElement).style.color = '#fff';
       (tab as HTMLElement).style.border = 'none';
 
-      // Show panel
+      // Mostrar panel
       panels.forEach(p => {
         (p as HTMLElement).style.display =
           p.getAttribute('data-panel') === target ? '' : 'none';
